@@ -1,48 +1,37 @@
-# intellij-git-plugin
+# Rename Current Commit Plugin
 
 ![Build](https://github.com/stanislaupalyn/intellij-git-plugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties) and [pluginName](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
-
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
-
-To keep everything working, do not remove `<!-- ... -->` sections. 
+This plugin allows you to rename the last Git commit with a new message. It adds this action to the Git section in the main toolbar.
 <!-- Plugin description end -->
 
-## Installation
+## Implementation
 
-- Using the IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "intellij-git-plugin"</kbd> >
-  <kbd>Install</kbd>
-  
-- Using JetBrains Marketplace:
+Action is added to Git main menu and toolbar both in new and classic UI.
 
-  Go to [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID) and install it by clicking the <kbd>Install to ...</kbd> button in case your IDE is running.
+![Git.Experimental.Branch.Popup.Actions](resources/screenshot_2.png)
 
-  You can also download the [latest release](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID/versions) from JetBrains Marketplace and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+![Git Main Menu](resources/screenshot_3.png)
 
-- Manually:
+![Old UI](resources/screenshot_1.png)
 
-  Download the [latest release](https://github.com/stanislaupalyn/intellij-git-plugin/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+![Default Dialog](resources/screenshot_4.png)
 
+![Dialog with Warnings](resources/screenshot_5.png)
+
+
+Before allowing the commit message to be changed, the plugin checks:
+
+- Whether there are staged changes, warning the user that they will be included in the amended commit.
+- Whether the commit has already been pushed, warning the user that amending it will create a new commit diverging from the remote branch.
+
+
+Git commands are executed using GitLineHandler, interacting directly with Git rather than relying on IntelliJ’s higher-level Git API.
+
+Git command results are checked for errors before further execution. Errors are displayed using Messages.showErrorDialog()
+
+All Git operations are executed in a background coroutine scope using IO Dispatcher. UI-related actions, such as displaying dialogs, are explicitly switched to the EDT.
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
