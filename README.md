@@ -16,15 +16,15 @@ Action is added to Git main menu and toolbar both in new and classic UI.
 
 ![Old UI](resources/screenshot_1.png)
 
-![Default Dialog](resources/screenshot_4.png)
-
-![Dialog with Warnings](resources/screenshot_5.png)
-
-
 Before allowing the commit message to be changed, the plugin checks:
 
 - Whether there are staged changes, warning the user that they will be included in the amended commit.
 - Whether the commit has already been pushed, warning the user that amending it will create a new commit diverging from the remote branch.
+
+
+![Default Dialog](resources/screenshot_4.png)
+
+![Dialog with Warnings](resources/screenshot_5.png)
 
 
 Git commands are executed using GitLineHandler, interacting directly with Git rather than relying on IntelliJ’s higher-level Git API.
