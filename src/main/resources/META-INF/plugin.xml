@@ -23,10 +23,11 @@
                 class="com.github.stanislaupalyn.intellijgitplugin.action.RenameCurrentCommitAction"
                 text="Rename Current Commit..."
                 description="Renames current git commit">
-<!--                <add-to-group group-id="VcsToolbarActions" anchor="first"/>-->
-<!--                <add-to-group group-id="MainToolBarSettings" anchor="first"/>-->
-                <add-to-group group-id="Git.Experimental.Branch.Popup.Actions" relative-to-action="Git.Commit.Stage"
-                              anchor="after"/>
+
+                <add-to-group group-id="VcsToolbarActions" anchor="after" relative-to-action="Git.Commit.Stage"/>
+                <add-to-group group-id="VcsNavBarToolbarActions" anchor="after" relative-to-action="Git.Commit.Stage"/>
+
+                <add-to-group group-id="Git.Experimental.Branch.Popup.Actions" anchor="after" relative-to-action="Git.Commit.Stage"/>
                 <add-to-group group-id="Git.MainMenu" anchor="after" relative-to-action="Git.Commit.Stage"/>
             </action>
     </actions>

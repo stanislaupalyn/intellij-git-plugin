@@ -66,7 +66,7 @@ class RenameCurrentCommitAction : AnAction() {
                 val result = Messages.showMultilineInputDialog(
                     project,
                     warningText + "Enter new commit message:",
-                    "Amend Commit",
+                    "Renaming Commit",
                     oldMessage,
                     null,
                     null
