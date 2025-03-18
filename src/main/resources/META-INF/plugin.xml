@@ -1,18 +1,41 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.stanislaupalyn.intellijgitplugin</id>
-    <name>intellij-git-plugin</name>
+
+    <description>
+        <![CDATA[
+            Adds rename last commit action in the Git section of the main toolbar.
+        ]]>
+    </description>
+
+    <name>Git Rename Last Commit</name>
     <vendor>stanislaupalyn</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
+    <depends>Git4Idea</depends>
+
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.stanislaupalyn.intellijgitplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
+    <actions>
+            <action
+                id="com.github.stanislaupalyn.intellijgitplugin.action.RenameCurrentCommitAction"
+                class="com.github.stanislaupalyn.intellijgitplugin.action.RenameCurrentCommitAction"
+                text="Rename Current Commit..."
+                description="Renames current git commit">
+<!--                <add-to-group group-id="VcsToolbarActions" anchor="first"/>-->
+<!--                <add-to-group group-id="MainToolBarSettings" anchor="first"/>-->
+                <add-to-group group-id="Git.Experimental.Branch.Popup.Actions" relative-to-action="Git.Commit.Stage"
+                              anchor="after"/>
+                <add-to-group group-id="Git.MainMenu" anchor="after" relative-to-action="Git.Commit.Stage"/>
+            </action>
+    </actions>
 
-    <applicationListeners>
-        <listener class="com.github.stanislaupalyn.intellijgitplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+<!--    <extensions defaultExtensionNs="com.intellij">-->
+<!--        <toolWindow factoryClass="com.github.stanislaupalyn.intellijgitplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>-->
+<!--    </extensions>-->
+
+<!--    <applicationListeners>-->
+<!--        <listener class="com.github.stanislaupalyn.intellijgitplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>-->
+<!--    </applicationListeners>-->
 </idea-plugin>

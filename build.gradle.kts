@@ -11,6 +11,12 @@ plugins {
     alias(libs.plugins.kover) // Gradle Kover Plugin
 }
 
+dependencies {
+    intellijPlatform {
+        bundledPlugin("Git4Idea")
+    }
+}
+
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
